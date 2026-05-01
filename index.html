@@ -1,10 +1,10 @@
-```html id="1filepro"
+```html id="fullpro1"
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arman Dashboard</title>
+<title>Arman Digital Dashboard</title>
 
 <style>
 body {
@@ -41,96 +41,184 @@ input {
     border-radius:6px;
     border:none;
 }
+.grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:10px;
+}
 </style>
 
 </head>
 <body>
 
 <div class="topbar">
-    <h2>Dashboard</h2>
+    <h2>Arman Dashboard</h2>
     <button onclick="toggleMode()">Switch Mode</button>
 </div>
 
 <div class="container">
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div id="adminPanel">
-    <div class="card">
-        <h3>Edit Profile</h3>
-        <input id="name" placeholder="Name">
-        <input id="bio" placeholder="Bio">
-        <input id="income" placeholder="Monthly Income">
-        <input id="trading" placeholder="Trading Income">
-        <input id="phone" placeholder="Phone">
-        <input id="email" placeholder="Email">
-        <button onclick="save()">Save</button>
-    </div>
+
+<div class="card">
+<h3>Basic Info</h3>
+<input id="name" placeholder="Name">
+<input id="bio" placeholder="Bio">
 </div>
 
-<!-- PUBLIC VIEW -->
+<div class="card">
+<h3>Income</h3>
+<input id="monthly" placeholder="Monthly Income">
+<input id="trading" placeholder="Trading Income">
+<input id="side" placeholder="Side Income">
+</div>
+
+<div class="card">
+<h3>Social Links</h3>
+<input id="instagram" placeholder="Instagram">
+<input id="whatsapp" placeholder="WhatsApp">
+<input id="youtube" placeholder="YouTube">
+<input id="telegram" placeholder="Telegram">
+</div>
+
+<div class="card">
+<h3>Devices</h3>
+<input id="mobile" placeholder="Mobile Details">
+<input id="laptop" placeholder="Laptop Details">
+</div>
+
+<div class="card">
+<h3>Finance</h3>
+<input id="bank" placeholder="Bank/UPI">
+<input id="tradingApp" placeholder="Trading App">
+</div>
+
+<div class="card">
+<h3>Property / Net Worth</h3>
+<input id="property" placeholder="Assets">
+<input id="networth" placeholder="Total Net Worth">
+</div>
+
+<button onclick="save()">Save All</button>
+
+</div>
+
+<!-- PUBLIC -->
 <div id="publicPanel" style="display:none;">
-    <div class="card">
-        <h1 id="p_name"></h1>
-        <p id="p_bio"></p>
-    </div>
 
-    <div class="card">
-        <h3>Income</h3>
-        <p id="p_income"></p>
-    </div>
+<div class="card">
+<h1 id="p_name"></h1>
+<p id="p_bio"></p>
+</div>
 
-    <div class="card">
-        <h3>Contact</h3>
-        <p id="p_phone"></p>
-        <p id="p_email"></p>
-    </div>
+<div class="card">
+<h3>Income</h3>
+<p id="p_income"></p>
+</div>
+
+<div class="card">
+<h3>Social Media</h3>
+<div id="p_social"></div>
+</div>
+
+<div class="card">
+<h3>Devices</h3>
+<p id="p_devices"></p>
+</div>
+
+<div class="card">
+<h3>Finance</h3>
+<p id="p_finance"></p>
+</div>
+
+<div class="card">
+<h3>Assets</h3>
+<p id="p_assets"></p>
+</div>
+
 </div>
 
 </div>
 
 <script>
 
-let mode = "admin";
+let mode="admin";
 
 function toggleMode(){
-    mode = (mode === "admin") ? "public" : "admin";
-    document.getElementById("adminPanel").style.display = mode==="admin"?"block":"none";
-    document.getElementById("publicPanel").style.display = mode==="public"?"block":"none";
+    mode = mode==="admin"?"public":"admin";
+    adminPanel.style.display = mode==="admin"?"block":"none";
+    publicPanel.style.display = mode==="public"?"block":"none";
     load();
 }
 
 function save(){
-    const data = {
-        name: name.value,
-        bio: bio.value,
-        income: income.value,
-        trading: trading.value,
-        phone: phone.value,
-        email: email.value
+    let data = {
+        name:name.value,
+        bio:bio.value,
+        monthly:monthly.value,
+        trading:trading.value,
+        side:side.value,
+        instagram:instagram.value,
+        whatsapp:whatsapp.value,
+        youtube:youtube.value,
+        telegram:telegram.value,
+        mobile:mobile.value,
+        laptop:laptop.value,
+        bank:bank.value,
+        tradingApp:tradingApp.value,
+        property:property.value,
+        networth:networth.value
     };
-    localStorage.setItem("armanData", JSON.stringify(data));
+
+    localStorage.setItem("armanFullData", JSON.stringify(data));
     alert("Saved ✅");
     load();
 }
 
 function load(){
-    let data = JSON.parse(localStorage.getItem("armanData")) || {};
+    let d = JSON.parse(localStorage.getItem("armanFullData")) || {};
 
     // admin fill
-    name.value = data.name || "";
-    bio.value = data.bio || "";
-    income.value = data.income || "";
-    trading.value = data.trading || "";
-    phone.value = data.phone || "";
-    email.value = data.email || "";
+    name.value=d.name||"";
+    bio.value=d.bio||"";
+    monthly.value=d.monthly||"";
+    trading.value=d.trading||"";
+    side.value=d.side||"";
+    instagram.value=d.instagram||"";
+    whatsapp.value=d.whatsapp||"";
+    youtube.value=d.youtube||"";
+    telegram.value=d.telegram||"";
+    mobile.value=d.mobile||"";
+    laptop.value=d.laptop||"";
+    bank.value=d.bank||"";
+    tradingApp.value=d.tradingApp||"";
+    property.value=d.property||"";
+    networth.value=d.networth||"";
 
-    // public fill
-    document.getElementById("p_name").innerText = data.name || "Your Name";
-    document.getElementById("p_bio").innerText = data.bio || "Your bio";
-    document.getElementById("p_income").innerText =
-        "Monthly: " + (data.income||"0") + " | Trading: " + (data.trading||"0");
-    document.getElementById("p_phone").innerText = "Phone: " + (data.phone||"-");
-    document.getElementById("p_email").innerText = "Email: " + (data.email||"-");
+    // public
+    p_name.innerText=d.name||"Your Name";
+    p_bio.innerText=d.bio||"Your Bio";
+
+    p_income.innerText=
+    "Monthly: "+(d.monthly||0)+
+    " | Trading: "+(d.trading||0)+
+    " | Side: "+(d.side||0);
+
+    p_social.innerHTML =
+    (d.instagram? `<a href="${d.instagram}" target="_blank">Instagram</a><br>`:"")+
+    (d.whatsapp? `<a href="${d.whatsapp}" target="_blank">WhatsApp</a><br>`:"")+
+    (d.youtube? `<a href="${d.youtube}" target="_blank">YouTube</a><br>`:"")+
+    (d.telegram? `<a href="${d.telegram}" target="_blank">Telegram</a><br>`:"");
+
+    p_devices.innerText =
+    "Mobile: "+(d.mobile||"-")+" | Laptop: "+(d.laptop||"-");
+
+    p_finance.innerText =
+    "Bank/UPI: "+(d.bank||"-")+" | Trading App: "+(d.tradingApp||"-");
+
+    p_assets.innerText =
+    "Assets: "+(d.property||"-")+" | Net Worth: "+(d.networth||"-");
 }
 
 load();
@@ -140,4 +228,3 @@ load();
 </body>
 </html>
 ```
-
