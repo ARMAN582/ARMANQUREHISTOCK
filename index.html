@@ -7,15 +7,14 @@
 
 <style>
 body{margin:0;font-family:Arial;background:#0f172a;color:#fff;text-align:center;}
-.box{background:#1e293b;padding:20px;border-radius:12px;width:320px;margin:60px auto;}
+.box{background:#1e293b;padding:20px;border-radius:12px;width:320px;margin:50px auto;}
 input,button{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;}
 input{background:#334155;color:#fff;}
 button{background:#38bdf8;color:#000;font-weight:bold;cursor:pointer;}
 .hidden{display:none;}
-.card{background:#1e293b;margin:10px;padding:15px;border-radius:10px;}
+.card{background:#1e293b;margin:10px;padding:12px;border-radius:10px;}
 .float{position:fixed;right:10px;bottom:20px;}
 .float button{display:block;margin:6px;border-radius:50%;width:50px;height:50px;}
-h2{margin-top:20px;}
 </style>
 
 </head>
@@ -43,12 +42,15 @@ h2{margin-top:20px;}
 <input id="code" placeholder="Enter Code">
 <button onclick="applyCode()">Apply Code</button>
 
+<h3>Purchase History</h3>
+<div id="history"></div>
+
 <button onclick="buy()">Buy via WhatsApp</button>
 <button onclick="logout()">Logout</button>
 
 </div>
 
-<!-- FLOATING BUTTONS -->
+<!-- FLOATING -->
 <div class="float">
 <button onclick="window.open('https://wa.me/919026550240')">W</button>
 <button onclick="window.open('tel:9026550240')">C</button>
@@ -67,67 +69,99 @@ function login(){
    return;
  }
 
- let userData = localStorage.getItem(email);
+ let user = localStorage.getItem(email);
 
- if(!userData){
-   // new user
-   let data = {
+ if(!user){
+   let data={
      AQ_Growth:100,
      AQ_Premium:200,
      AQ_Elite:300
    };
-   localStorage.setItem(email, JSON.stringify(data));
+   localStorage.setItem(email,JSON.stringify(data));
  }
 
- localStorage.setItem("currentUser", email);
+ localStorage.setItem("currentUser",email);
 
  document.getElementById("login").classList.add("hidden");
  document.getElementById("dash").classList.remove("hidden");
 
  loadData();
+ loadHistory();
 }
 
-// LOAD USER DATA
+// LOAD DATA
 function loadData(){
- let email = localStorage.getItem("currentUser");
- let data = JSON.parse(localStorage.getItem(email));
+ let email=localStorage.getItem("currentUser");
+ let data=JSON.parse(localStorage.getItem(email));
 
- document.getElementById("s1").innerText = data.AQ_Growth;
- document.getElementById("s2").innerText = data.AQ_Premium;
- document.getElementById("s3").innerText = data.AQ_Elite;
+ document.getElementById("s1").innerText=data.AQ_Growth;
+ document.getElementById("s2").innerText=data.AQ_Premium;
+ document.getElementById("s3").innerText=data.AQ_Elite;
 }
 
-// APPLY ADMIN CODE
+// APPLY CODE
 function applyCode(){
- let code = document.getElementById("code").value.trim().toUpperCase();
- let email = localStorage.getItem("currentUser");
- let data = JSON.parse(localStorage.getItem(email));
+ let code=document.getElementById("code").value.trim().toUpperCase();
+ let email=localStorage.getItem("currentUser");
+ let data=JSON.parse(localStorage.getItem(email));
 
- if(code === "ARMAN100"){
-   data.AQ_Growth += 100;
+ let msg="";
+
+ if(code==="ARMAN100"){
+   data.AQ_Growth+=100;
+   msg="100 AQ Growth Added";
  }
- else if(code === "VIP200"){
-   data.AQ_Premium += 200;
+ else if(code==="VIP200"){
+   data.AQ_Premium+=200;
+   msg="200 AQ Premium Added";
  }
- else if(code === "ELITE300"){
-   data.AQ_Elite += 300;
+ else if(code==="ELITE300"){
+   data.AQ_Elite+=300;
+   msg="300 AQ Elite Added";
  }
- else if(code === "SUPER500"){
-   data.AQ_Growth += 500;
-   data.AQ_Premium += 500;
-   data.AQ_Elite += 500;
+ else if(code==="SUPER500"){
+   data.AQ_Growth+=500;
+   data.AQ_Premium+=500;
+   data.AQ_Elite+=500;
+   msg="500 All Stocks Added";
  }
  else{
    alert("Invalid Code");
    return;
  }
 
- localStorage.setItem(email, JSON.stringify(data));
- alert("Stock Updated Successfully");
+ localStorage.setItem(email,JSON.stringify(data));
+
+ saveHistory("✅ "+msg+" | "+new Date().toLocaleString());
+
+ alert("Payment Verified\n"+msg);
+
  loadData();
+ loadHistory();
 }
 
-// BUY BUTTON
+// SAVE HISTORY
+function saveHistory(text){
+ let email=localStorage.getItem("currentUser");
+ let history=JSON.parse(localStorage.getItem(email+"_history")) || [];
+ history.push(text);
+ localStorage.setItem(email+"_history",JSON.stringify(history));
+}
+
+// LOAD HISTORY
+function loadHistory(){
+ let email=localStorage.getItem("currentUser");
+ let history=JSON.parse(localStorage.getItem(email+"_history")) || [];
+
+ let box=document.getElementById("history");
+ box.innerHTML="";
+
+ history.forEach(h=>{
+   box.innerHTML += "<div class='card'>"+h+"</div>";
+ });
+}
+
+// BUY
 function buy(){
  window.open("https://wa.me/919026550240");
 }
@@ -143,6 +177,7 @@ if(localStorage.getItem("currentUser")){
  document.getElementById("login").classList.add("hidden");
  document.getElementById("dash").classList.remove("hidden");
  loadData();
+ loadHistory();
 }
 
 </script>
