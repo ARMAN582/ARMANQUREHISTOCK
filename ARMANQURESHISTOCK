@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Arman Stock System</title>
+
+<style>
+body{font-family:Arial;background:#0f172a;color:#fff;text-align:center;}
+.box{background:#1e293b;padding:20px;border-radius:12px;width:300px;margin:50px auto;}
+input,button{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;}
+input{background:#334155;color:#fff;}
+button{background:#38bdf8;color:#000;font-weight:bold;cursor:pointer;}
+.hidden{display:none;}
+.card{background:#1e293b;margin:10px;padding:15px;border-radius:10px;}
+.float{position:fixed;right:10px;bottom:20px;}
+.float button{display:block;margin:5px;border-radius:50%;width:50px;height:50px;}
+</style>
+
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login" class="box">
+<h2>Login</h2>
+<input id="email" placeholder="Email">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login / Signup</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dash" class="hidden">
+<h2>Your Stocks</h2>
+
+<div class="card">AQ Growth: <span id="s1"></span></div>
+<div class="card">AQ Premium: <span id="s2"></span></div>
+<div class="card">AQ Elite: <span id="s3"></span></div>
+
+<h3>Admin Code</h3>
+<input id="code" placeholder="Enter Code">
+<button onclick="applyCode()">Apply Code</button>
+
+<button onclick="buy()">Buy via WhatsApp</button>
+<button onclick="logout()">Logout</button>
+</div>
+
+<!-- FLOATING -->
+<div class="float">
+<button onclick="window.open('https://wa.me/919026550240')">W</button>
+<button onclick="window.open('tel:9026550240')">C</button>
+<button onclick="window.open('https://instagram.com/armanqureshi2800')">I</button>
+</div>
+
+<script>
+
+// USER LOGIN
+function login(){
+ let email=document.getElementById("email").value;
+ let pass=document.getElementById("pass").value;
+
+ if(!email || !pass){alert("Enter details");return;}
+
+ let user=localStorage.getItem(email);
+
+ if(!user){
+   let data={AQ_Growth:100,AQ_Premium:200,AQ_Elite:300};
+   localStorage.setItem(email,JSON.stringify(data));
+ }
+
+ localStorage.setItem("current",email);
+
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("dash").classList.remove("hidden");
+
+ load();
+}
+
+// LOAD DATA
+function load(){
+ let email=localStorage.getItem("current");
+ let data=JSON.parse(localStorage.getItem(email));
+
+ document.getElementById("s1").innerText=data.AQ_Growth;
+ document.getElementById("s2").innerText=data.AQ_Premium;
+ document.getElementById("s3").innerText=data.AQ_Elite;
+}
+
+// ADMIN CODE SYSTEM
+function applyCode(){
+ let code=document.getElementById("code").value;
+ let email=localStorage.getItem("current");
+ let data=JSON.parse(localStorage.getItem(email));
+
+ if(code=="ARMAN100"){
+   data.AQ_Growth+=100;
+ }
+ else if(code=="VIP200"){
+   data.AQ_Premium+=200;
+ }
+ else if(code=="ELITE300"){
+   data.AQ_Elite+=300;
+ }
+ else{
+   alert("Invalid Code");
+   return;
+ }
+
+ localStorage.setItem(email,JSON.stringify(data));
+ alert("Stock Updated");
+ load();
+}
+
+// BUY BUTTON
+function buy(){
+ window.open("https://wa.me/919026550240");
+}
+
+// LOGOUT
+function logout(){
+ localStorage.removeItem("current");
+ location.reload();
+}
+
+// AUTO LOGIN
+if(localStorage.getItem("current")){
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("dash").classList.remove("hidden");
+ load();
+}
+
+</script>
+
+</body>
+</html>
