@@ -1,233 +1,203 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>AQ Credits</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Dashboard - Arman</title>
 
 <style>
-:root{
-  --bg1:#020617; --bg2:#0f172a; --card:#0b1220cc; --line:#1f2a44;
-  --accent:#22c55e; --accent2:#4ade80; --text:#e5e7eb; --muted:#94a3b8;
-}
-*{box-sizing:border-box}
-body{
-  margin:0; color:var(--text);
-  font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
-  background:linear-gradient(135deg,var(--bg1),var(--bg2));
-}
-.container{max-width:420px;margin:auto;padding:18px}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.badge{font-size:12px;color:#000;background:linear-gradient(45deg,#ffd700,#ffb700);
-  padding:4px 8px;border-radius:999px}
-.card{
-  background:var(--card); border:1px solid var(--line);
-  backdrop-filter:blur(12px);
-  border-radius:16px; padding:14px; margin:10px 0;
-  box-shadow:0 10px 30px rgba(0,0,0,.25);
-}
-.row{display:flex;justify-content:space-between;align-items:center}
-.title{font-weight:700}
-.muted{color:var(--muted); font-size:13px}
-.value{font-size:22px;font-weight:800}
-
-.btn{
-  width:100%; border:none; border-radius:12px; padding:12px; margin-top:8px;
-  font-weight:800; cursor:pointer; color:#001;
-  background:linear-gradient(45deg,var(--accent),var(--accent2));
-}
-.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
-.btn.warn{background:linear-gradient(45deg,#f59e0b,#fbbf24)}
-.btn:active{transform:scale(.98)}
-
-.hidden{display:none}
-
-.input{
-  width:100%; border:1px solid var(--line); border-radius:12px; padding:12px;
-  background:#060c18; color:var(--text); margin:8px 0;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{font-size:13px;padding:8px;border-bottom:1px solid var(--line)}
-.table th{color:var(--muted);text-align:left}
+body {
+    display: flex;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    height: 100vh;
+}
 
-.footer{margin-top:12px;text-align:center;color:var(--muted);font-size:12px}
-.pill{padding:6px 10px;border-radius:999px;background:#071023;border:1px solid var(--line)}
-.flex{display:flex;gap:8px}
+/* Sidebar */
+.sidebar {
+    width: 220px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    margin: 8px 0;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background: #3b82f6;
+}
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Top Bar */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+    gap: 15px;
+}
+
+.card {
+    background: rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+/* Profile */
+.profile {
+    margin-top: 20px;
+    background: rgba(255,255,255,0.08);
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/* Links */
+.link-box {
+    margin-top: 15px;
+}
+
+.link {
+    display: flex;
+    justify-content: space-between;
+    background: #3b82f6;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 8px 0;
+}
+
+button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.copy {
+    background: #10b981;
+    color: white;
+}
+
+.open {
+    background: #2563eb;
+    color: white;
+}
 </style>
+
+<script>
+function copyText(text) {
+    navigator.clipboard.writeText(text);
+    alert("Copied: " + text);
+}
+</script>
+
 </head>
 
 <body>
-<div class="container">
 
-  <!-- LOGIN -->
-  <div id="loginBox" class="card">
-    <div class="header">
-      <div class="title">AQ Credits</div>
-      <div class="badge">BETA</div>
-    </div>
-    <div class="muted">Login to view your portfolio</div>
-    <input id="email" class="input" placeholder="Enter Email"/>
-    <button class="btn" onclick="login()">Continue</button>
-  </div>
+<!-- Sidebar -->
+<div class="sidebar">
+    <h2>Dashboard</h2>
+    <a href="#">Profile</a>
+    <a href="#">Analytics</a>
+    <a href="#">Services</a>
+    <a href="#">Settings</a>
+</div>
 
-  <!-- DASHBOARD -->
-  <div id="dash" class="hidden">
+<!-- Main -->
+<div class="main">
 
-    <div class="header">
-      <div class="title">Portfolio</div>
-      <div class="flex">
-        <span class="pill">Virtual Credits</span>
-      </div>
+    <div class="topbar">
+        <h1>Welcome, Arman</h1>
+        <span>Online Business Panel</span>
     </div>
 
-    <!-- BALANCES -->
-    <div class="card">
-      <div class="row">
-        <div>
-          <div class="title">AQ Growth</div>
-          <div class="muted">Basic credits</div>
+    <!-- Stats -->
+    <div class="cards">
+        <div class="card">
+            <h3>Followers Sold</h3>
+            <p>4,100+</p>
         </div>
-        <div class="value" id="g">0</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="row">
-        <div>
-          <div class="title">AQ Premium</div>
-          <div class="muted">Mid-tier credits</div>
+        <div class="card">
+            <h3>Orders</h3>
+            <p>120+</p>
         </div>
-        <div class="value" id="p">0</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="row">
-        <div>
-          <div class="title">AQ Elite</div>
-          <div class="muted">High-tier credits</div>
+        <div class="card">
+            <h3>Revenue</h3>
+            <p>₹12,000+</p>
         </div>
-        <div class="value" id="e">0</div>
-      </div>
     </div>
 
-    <!-- BUY -->
-    <div class="card">
-      <div class="title">Buy Credits</div>
-      <div class="muted">Tap → Pay on WhatsApp → then confirm</div>
+    <!-- Profile -->
+    <div class="profile">
+        <h2>Arman Qureshi</h2>
+        <p>Freelancer | Ads Agency | Growth Expert</p>
 
-      <button class="btn" onclick="startBuy('g',100,100)">Buy 100 Growth (₹100)</button>
-      <button class="btn" onclick="startBuy('p',200,200)">Buy 200 Premium (₹200)</button>
-      <button class="btn" onclick="startBuy('e',300,300)">Buy 300 Elite (₹300)</button>
+        <div class="link-box">
 
-      <button class="btn warn" onclick="confirmPaid()">✔ I Paid (Confirm)</button>
+            <div class="link">
+                Instagram
+                <div>
+                    <button class="open" onclick="window.open('https://www.instagram.com/armanqureshi2800')">Open</button>
+                </div>
+            </div>
+
+            <div class="link">
+                WhatsApp
+                <div>
+                    <button class="open" onclick="window.open('https://wa.link/2hjlkj')">Chat</button>
+                </div>
+            </div>
+
+            <div class="link">
+                Email
+                <div>
+                    <button class="copy" onclick="copyText('k4046280@gmail.com')">Copy</button>
+                </div>
+            </div>
+
+            <div class="link">
+                Phone
+                <div>
+                    <button class="copy" onclick="copyText('9026550240')">Copy</button>
+                </div>
+            </div>
+
+        </div>
     </div>
-
-    <!-- HISTORY -->
-    <div class="card">
-      <div class="title">Transactions</div>
-      <table class="table">
-        <thead><tr><th>Details</th><th>Time</th></tr></thead>
-        <tbody id="history"></tbody>
-      </table>
-    </div>
-
-    <button class="btn ghost" onclick="logout()">Logout</button>
-
-    <div class="footer">This is a virtual credits demo. Not real stock.</div>
-  </div>
 
 </div>
 
-<script>
-let currentBuy=null;
-
-// LOGIN
-function login(){
-  const email = (document.getElementById('email').value||'').trim();
-  if(!email) return alert('Enter email');
-
-  if(!localStorage.getItem(email)){
-    localStorage.setItem(email, JSON.stringify({g:100,p:200,e:300}));
-  }
-  localStorage.setItem('u', email);
-
-  document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('dash').classList.remove('hidden');
-  load();
-}
-
-// LOAD
-function load(){
-  const u = localStorage.getItem('u');
-  const d = JSON.parse(localStorage.getItem(u) || '{"g":0,"p":0,"e":0}');
-  g.textContent = d.g; p.textContent = d.p; e.textContent = d.e;
-  loadHistory();
-}
-
-// START BUY → open WhatsApp
-function startBuy(type, qty, price){
-  currentBuy = {type, qty, price};
-  const msg = encodeURIComponent(
-    `Hi, I want to buy ${qty} ${type.toUpperCase()} credits (₹${price}).`
-  );
-  window.open(`https://wa.me/919026550240?text=${msg}`);
-  alert('Send payment on WhatsApp, then tap "I Paid (Confirm)".');
-}
-
-// CONFIRM (manual)
-function confirmPaid(){
-  if(!currentBuy) return alert('Select a package first');
-
-  const u = localStorage.getItem('u');
-  const d = JSON.parse(localStorage.getItem(u));
-
-  if(currentBuy.type==='g') d.g += currentBuy.qty;
-  if(currentBuy.type==='p') d.p += currentBuy.qty;
-  if(currentBuy.type==='e') d.e += currentBuy.qty;
-
-  localStorage.setItem(u, JSON.stringify(d));
-
-  const detail = `+${currentBuy.qty} ${currentBuy.type.toUpperCase()} (₹${currentBuy.price})`;
-  saveHistory(detail);
-
-  alert('Success ✅ Credits added');
-  currentBuy = null;
-  load();
-}
-
-// HISTORY
-function saveHistory(text){
-  const u = localStorage.getItem('u');
-  const h = JSON.parse(localStorage.getItem(u+'_h')||'[]');
-  h.push({t:text, d:new Date().toLocaleString()});
-  localStorage.setItem(u+'_h', JSON.stringify(h));
-}
-function loadHistory(){
-  const u = localStorage.getItem('u');
-  const h = JSON.parse(localStorage.getItem(u+'_h')||'[]');
-  const box = document.getElementById('history');
-  box.innerHTML = '';
-  h.slice().reverse().forEach(i=>{
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${i.t}</td><td>${i.d}</td>`;
-    box.appendChild(tr);
-  });
-}
-
-// LOGOUT
-function logout(){
-  localStorage.removeItem('u');
-  location.reload();
-}
-
-// AUTO LOGIN
-if(localStorage.getItem('u')){
-  document.getElementById('loginBox').classList.add('hidden');
-  document.getElementById('dash').classList.remove('hidden');
-  load();
-}
-</script>
 </body>
 </html>
+```
