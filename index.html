@@ -1,164 +1,245 @@
-```html
+```html id="saas_dashboard_pro_v1"
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arman Digital Profile</title>
+<title>Arman SaaS Dashboard</title>
 
 <style>
-body {
-    margin:0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+color:#fff;
 }
 
-.container {
-    max-width:1100px;
-    margin:auto;
-    padding:20px;
+/* ================= LOGIN ================= */
+#login{
+position:fixed;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#0f172a,#1e293b);
+z-index:9999;
 }
 
-.card {
-    position:relative;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    padding:20px;
-    border-radius:16px;
-    margin-bottom:15px;
-    overflow:hidden;
-    opacity:0;
-    transform: translateY(30px);
-    animation: fadeUp 0.6s ease forwards;
+.box{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+padding:30px;
+border-radius:16px;
+width:280px;
+text-align:center;
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:16px;
-    padding:1px;
-    background:linear-gradient(120deg,#00ffcc,#00ff00,#00ccff);
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;
-    mask-composite:exclude;
-    opacity:0.4;
+.box input{
+width:100%;
+padding:10px;
+margin:10px 0;
+border-radius:8px;
+border:none;
+outline:none;
 }
 
-.grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
+.box button{
+width:100%;
+padding:10px;
+background:#00ffcc;
+border:none;
+border-radius:8px;
+cursor:pointer;
 }
 
-.title {
-    font-size:18px;
-    margin-bottom:10px;
-    opacity:0.85;
+/* ================= LAYOUT ================= */
+.sidebar{
+width:220px;
+height:100vh;
+position:fixed;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+padding:20px;
 }
 
-.item {
-    margin:10px 0;
+.sidebar h2{
+margin-bottom:20px;
 }
 
-a {
-    color:#3b82f6;
-    text-decoration:none;
+.sidebar button{
+width:100%;
+padding:10px;
+margin:6px 0;
+background:transparent;
+border:1px solid rgba(255,255,255,0.2);
+color:white;
+border-radius:10px;
+cursor:pointer;
 }
 
-@keyframes fadeUp {
-    to { opacity:1; transform:translateY(0); }
+.sidebar button:hover{
+background:#00ffcc;
+color:black;
 }
+
+.main{
+margin-left:240px;
+padding:20px;
+}
+
+/* ================= CARDS ================= */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(12px);
+padding:18px;
+border-radius:16px;
+transition:0.3s;
+animation:fade 0.5s ease;
+}
+
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 0 20px rgba(0,255,200,0.4);
+}
+
+/* ================= SECTION ================= */
+.section{display:none;}
+.active{display:block;}
+
+@keyframes fade{
+from{opacity:0;transform:translateY(20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+a{color:#3b82f6;text-decoration:none;}
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- LOGIN -->
+<div id="login">
+<div class="box">
+<h2>🔐 Login</h2>
+<input id="pass" placeholder="Enter PIN">
+<button onclick="login()">Enter Dashboard</button>
+</div>
+</div>
 
+<!-- SIDEBAR -->
+<div class="sidebar">
+<h2>SAAS PANEL</h2>
+<button onclick="show('home')">🏠 Home</button>
+<button onclick="show('social')">📱 Social</button>
+<button onclick="show('finance')">📊 Finance</button>
+<button onclick="show('apps')">☁️ Apps</button>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- HOME -->
+<div id="home" class="section active">
 <div class="card">
 <h1>Arman Qureshi</h1>
 <p>Trader • Creator • Dreamer 🔥</p>
-<p>📍 Location: Mumbai</p>
+<p>📍 Mumbai</p>
+</div>
+
+<div class="grid">
+<div class="card">💰 Monthly Income<br><h2>₹18,000</h2></div>
+<div class="card">📈 Trading Income<br><h2>₹20,000</h2></div>
+<div class="card">🎯 Side Income<br><h2>₹5,000</h2></div>
+<div class="card">🏆 Annual Income<br><h2>₹3,96,000</h2></div>
+</div>
 </div>
 
 <!-- SOCIAL -->
+<div id="social" class="section">
 <div class="card">
-<div class="title">📱 Social Media</div>
-
-<div class="item">📸 Instagram — @armanqureshi2800  
-<a href="https://instagram.com/armanqureshi2800" target="_blank">🔗 Open</a></div>
-
-<div class="item">💬 WhatsApp — 9026550240  
-<a href="https://wa.me/9026550240" target="_blank">🔗 Open</a></div>
-
-<div class="item">🔵 Facebook  
-<a href="#" target="_blank">🔗 Open</a></div>
-
-<div class="item">▶️ YouTube  
-<a href="#" target="_blank">🔗 Open</a></div>
-
-<div class="item">𝕏 Twitter  
-<a href="#" target="_blank">🔗 Open</a></div>
-
+<h2>📱 Social Media</h2>
+<p>Instagram → <a href="https://instagram.com/armanqureshi2800" target="_blank">Open</a></p>
+<p>WhatsApp → <a href="https://wa.me/9026550240" target="_blank">Open</a></p>
+<p>Facebook → <a href="https://facebook.com" target="_blank">Open</a></p>
+<p>YouTube → <a href="https://youtube.com" target="_blank">Open</a></p>
 </div>
-
-<!-- GOOGLE APPS -->
-<div class="card">
-<div class="title">☁️ Google & Apps</div>
-
-<div class="item">📧 Gmail  
-<a href="#" target="_blank">🔗 Open</a></div>
-
-<div class="item">🗂️ Drive  
-<a href="https://drive.google.com" target="_blank">🔗 Open</a></div>
-
-<div class="item">📍 Maps  
-<a href="https://maps.google.com" target="_blank">🔗 Open</a></div>
-
 </div>
 
 <!-- FINANCE -->
+<div id="finance" class="section">
 <div class="card">
-<div class="title">📈 Trading & Finance</div>
-
-<p>
-📊 Client ID: 902655<br>
-💰 Monthly Income: ₹18,000<br>
-💵 Side Income: ₹5,000<br>
-📈 Trading Income: ₹20,000<br>
-🏆 Annual Income: ₹3,96,000 (approx)
-</p>
-
+<h2>📊 Finance Overview</h2>
+<p>Client ID: 902655</p>
+<p>Monthly: ₹18,000</p>
+<p>Trading: ₹20,000</p>
+<p>Side: ₹5,000</p>
+</div>
 </div>
 
-<!-- DEVICES -->
+<!-- APPS -->
+<div id="apps" class="section">
 <div class="card">
-<div class="title">📱 Devices</div>
+<h2>☁️ Apps Panel</h2>
 
-<p>
-📱 Samsung Z Fold 5 (1TB)<br>
-📱 iPhone 7 / 11 / 13<br>
-📱 Infinix Hot 12<br>
-💻 Laptop: Asus ExpertBook P1
-</p>
+<div class="grid">
 
-</div>
-
-<!-- PROPERTY -->
 <div class="card">
-<div class="title">🏠 Property</div>
+📧 Gmail<br>
+<a href="https://mail.google.com" target="_blank">Open</a>
+</div>
 
-<p>
-🏠 Property: Nothing<br>
-🚗 Vehicle: Not Added<br>
-🌾 Land: Not Added
-</p>
+<div class="card">
+🗂️ Drive<br>
+<a href="https://drive.google.com" target="_blank">Open</a>
+</div>
 
+<div class="card">
+📍 Maps<br>
+<a href="https://maps.google.com" target="_blank">Open</a>
+</div>
+
+<div class="card">
+📦 Amazon<br>
+<a href="https://amazon.in" target="_blank">Open</a>
+</div>
+
+<div class="card">
+🎵 Spotify<br>
+<a href="https://spotify.com" target="_blank">Open</a>
 </div>
 
 </div>
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+const PIN="902655";
+
+function login(){
+let p=document.getElementById("pass").value;
+if(p===PIN){
+document.getElementById("login").style.display="none";
+}else{
+alert("Wrong PIN");
+}
+}
+
+function show(id){
+document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+</script>
 
 </body>
 </html>
