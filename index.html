@@ -3,181 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arman Stock System</title>
+<title>Arman Stocks</title>
 
 <style>
 body{margin:0;font-family:Arial;background:#0f172a;color:#fff;text-align:center;}
-.box{background:#1e293b;padding:20px;border-radius:12px;width:320px;margin:50px auto;}
-input,button{width:100%;padding:10px;margin:8px 0;border:none;border-radius:8px;}
-input{background:#334155;color:#fff;}
-button{background:#38bdf8;color:#000;font-weight:bold;cursor:pointer;}
+.container{padding:20px;}
+.card{background:#1e293b;margin:10px;padding:15px;border-radius:12px;}
+button{padding:10px;margin:5px;border:none;border-radius:8px;background:#38bdf8;color:#000;font-weight:bold;}
+input{padding:10px;border-radius:8px;border:none;margin:5px;}
 .hidden{display:none;}
-.card{background:#1e293b;margin:10px;padding:12px;border-radius:10px;}
-.float{position:fixed;right:10px;bottom:20px;}
-.float button{display:block;margin:6px;border-radius:50%;width:50px;height:50px;}
 </style>
-
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="login" class="box">
-<h2>Arman Stocks</h2>
-<input id="email" placeholder="Email">
-<input id="pass" type="password" placeholder="Password">
-<button onclick="login()">Login / Signup</button>
+<div id="login" class="container">
+<h2>Login</h2>
+<input id="user" placeholder="Enter Email">
+<button onclick="login()">Enter</button>
 </div>
 
-<!-- DASHBOARD -->
 <div id="dash" class="hidden">
 
-<h2>Your Stocks</h2>
+<h2>Your Portfolio</h2>
 
-<div class="card">AQ Growth: <span id="s1"></span></div>
-<div class="card">AQ Premium: <span id="s2"></span></div>
-<div class="card">AQ Elite: <span id="s3"></span></div>
+<div class="card">AQ Growth: <span id="g"></span></div>
+<div class="card">AQ Premium: <span id="p"></span></div>
+<div class="card">AQ Elite: <span id="e"></span></div>
 
-<h3>Enter Code</h3>
-<input id="code" placeholder="Enter Code">
-<button onclick="applyCode()">Apply Code</button>
+<h3>Buy Stocks</h3>
+
+<div class="card">
+AQ Growth  
+<br>
+<button onclick="buy('growth',100)">Buy 100 (₹100)</button>
+<button onclick="buy('growth',500)">Buy 500 (₹500)</button>
+</div>
+
+<div class="card">
+AQ Premium  
+<br>
+<button onclick="buy('premium',200)">Buy 200 (₹200)</button>
+<button onclick="buy('premium',1000)">Buy 1000 (₹800)</button>
+</div>
+
+<div class="card">
+AQ Elite  
+<br>
+<button onclick="buy('elite',300)">Buy 300 (₹300)</button>
+<button onclick="buy('elite',1500)">Buy 1500 (₹1000)</button>
+</div>
+
+<h3>Confirm Payment</h3>
+<button onclick="confirm()">✔️ I Paid</button>
 
 <h3>Purchase History</h3>
 <div id="history"></div>
 
-<button onclick="buy()">Buy via WhatsApp</button>
 <button onclick="logout()">Logout</button>
 
 </div>
 
-<!-- FLOATING -->
-<div class="float">
-<button onclick="window.open('https://wa.me/919026550240')">W</button>
-<button onclick="window.open('tel:9026550240')">C</button>
-<button onclick="window.open('https://instagram.com/armanqureshi2800')">I</button>
-</div>
-
 <script>
 
-// LOGIN / SIGNUP
+let currentBuy=null;
+
+// LOGIN
 function login(){
- let email=document.getElementById("email").value.trim();
- let pass=document.getElementById("pass").value.trim();
+ let user=document.getElementById("user").value;
+ if(!user)return alert("Enter email");
 
- if(!email || !pass){
-   alert("Enter Email & Password");
-   return;
+ if(!localStorage.getItem(user)){
+   localStorage.setItem(user,JSON.stringify({
+     g:100,p:200,e:300
+   }));
  }
 
- let user = localStorage.getItem(email);
-
- if(!user){
-   let data={
-     AQ_Growth:100,
-     AQ_Premium:200,
-     AQ_Elite:300
-   };
-   localStorage.setItem(email,JSON.stringify(data));
- }
-
- localStorage.setItem("currentUser",email);
+ localStorage.setItem("u",user);
 
  document.getElementById("login").classList.add("hidden");
  document.getElementById("dash").classList.remove("hidden");
 
- loadData();
- loadHistory();
+ load();
 }
 
 // LOAD DATA
-function loadData(){
- let email=localStorage.getItem("currentUser");
- let data=JSON.parse(localStorage.getItem(email));
+function load(){
+ let u=localStorage.getItem("u");
+ let d=JSON.parse(localStorage.getItem(u));
 
- document.getElementById("s1").innerText=data.AQ_Growth;
- document.getElementById("s2").innerText=data.AQ_Premium;
- document.getElementById("s3").innerText=data.AQ_Elite;
-}
+ document.getElementById("g").innerText=d.g;
+ document.getElementById("p").innerText=d.p;
+ document.getElementById("e").innerText=d.e;
 
-// APPLY CODE
-function applyCode(){
- let code=document.getElementById("code").value.trim().toUpperCase();
- let email=localStorage.getItem("currentUser");
- let data=JSON.parse(localStorage.getItem(email));
-
- let msg="";
-
- if(code==="ARMAN100"){
-   data.AQ_Growth+=100;
-   msg="100 AQ Growth Added";
- }
- else if(code==="VIP200"){
-   data.AQ_Premium+=200;
-   msg="200 AQ Premium Added";
- }
- else if(code==="ELITE300"){
-   data.AQ_Elite+=300;
-   msg="300 AQ Elite Added";
- }
- else if(code==="SUPER500"){
-   data.AQ_Growth+=500;
-   data.AQ_Premium+=500;
-   data.AQ_Elite+=500;
-   msg="500 All Stocks Added";
- }
- else{
-   alert("Invalid Code");
-   return;
- }
-
- localStorage.setItem(email,JSON.stringify(data));
-
- saveHistory("✅ "+msg+" | "+new Date().toLocaleString());
-
- alert("Payment Verified\n"+msg);
-
- loadData();
  loadHistory();
 }
 
-// SAVE HISTORY
-function saveHistory(text){
- let email=localStorage.getItem("currentUser");
- let history=JSON.parse(localStorage.getItem(email+"_history")) || [];
- history.push(text);
- localStorage.setItem(email+"_history",JSON.stringify(history));
+// BUY CLICK
+function buy(type,qty){
+ currentBuy={type,qty};
+
+ window.open("https://wa.me/919026550240");
+
+ alert("Send payment on WhatsApp\nThen click 'I Paid'");
 }
 
-// LOAD HISTORY
+// CONFIRM PURCHASE
+function confirm(){
+ if(!currentBuy)return alert("Select buy first");
+
+ let u=localStorage.getItem("u");
+ let d=JSON.parse(localStorage.getItem(u));
+
+ if(currentBuy.type=="growth") d.g+=currentBuy.qty;
+ if(currentBuy.type=="premium") d.p+=currentBuy.qty;
+ if(currentBuy.type=="elite") d.e+=currentBuy.qty;
+
+ localStorage.setItem(u,JSON.stringify(d));
+
+ saveHistory("Bought "+currentBuy.qty+" "+currentBuy.type.toUpperCase());
+
+ alert("Purchase Successful ✅");
+
+ currentBuy=null;
+ load();
+}
+
+// HISTORY
+function saveHistory(text){
+ let u=localStorage.getItem("u");
+ let h=JSON.parse(localStorage.getItem(u+"_h"))||[];
+ h.push(text+" | "+new Date().toLocaleString());
+ localStorage.setItem(u+"_h",JSON.stringify(h));
+}
+
 function loadHistory(){
- let email=localStorage.getItem("currentUser");
- let history=JSON.parse(localStorage.getItem(email+"_history")) || [];
+ let u=localStorage.getItem("u");
+ let h=JSON.parse(localStorage.getItem(u+"_h"))||[];
 
  let box=document.getElementById("history");
  box.innerHTML="";
 
- history.forEach(h=>{
-   box.innerHTML += "<div class='card'>"+h+"</div>";
+ h.forEach(i=>{
+   box.innerHTML+="<div class='card'>"+i+"</div>";
  });
-}
-
-// BUY
-function buy(){
- window.open("https://wa.me/919026550240");
 }
 
 // LOGOUT
 function logout(){
- localStorage.removeItem("currentUser");
+ localStorage.removeItem("u");
  location.reload();
 }
 
 // AUTO LOGIN
-if(localStorage.getItem("currentUser")){
+if(localStorage.getItem("u")){
  document.getElementById("login").classList.add("hidden");
  document.getElementById("dash").classList.remove("hidden");
- loadData();
- loadHistory();
+ load();
 }
 
 </script>
