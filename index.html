@@ -1,12 +1,10 @@
-```html id="finalclean1"
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arman Premium Dashboard</title>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<title>Arman Digital Profile</title>
 
 <style>
 body {
@@ -15,34 +13,62 @@ body {
     background: linear-gradient(135deg,#0f172a,#1e293b);
     color:white;
 }
+
 .container {
-    padding:20px;
     max-width:1100px;
     margin:auto;
-}
-.card {
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(10px);
     padding:20px;
-    border-radius:15px;
-    margin-bottom:20px;
-    transition:0.3s;
 }
-.card:hover {
-    transform: translateY(-5px);
+
+.card {
+    position:relative;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    padding:20px;
+    border-radius:16px;
+    margin-bottom:15px;
+    overflow:hidden;
+    opacity:0;
+    transform: translateY(30px);
+    animation: fadeUp 0.6s ease forwards;
 }
+
+.card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:16px;
+    padding:1px;
+    background:linear-gradient(120deg,#00ffcc,#00ff00,#00ccff);
+    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    opacity:0.4;
+}
+
 .grid {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
     gap:15px;
 }
-h1 {
-    font-size:28px;
-}
-.section-title {
+
+.title {
     font-size:18px;
     margin-bottom:10px;
-    opacity:0.8;
+    opacity:0.85;
+}
+
+.item {
+    margin:10px 0;
+}
+
+a {
+    color:#3b82f6;
+    text-decoration:none;
+}
+
+@keyframes fadeUp {
+    to { opacity:1; transform:translateY(0); }
 }
 </style>
 </head>
@@ -52,86 +78,87 @@ h1 {
 <div class="container">
 
 <div class="card">
-    <h1 id="name"></h1>
-    <p id="bio"></p>
+<h1>Arman Qureshi</h1>
+<p>Trader • Creator • Dreamer 🔥</p>
+<p>📍 Location: Mumbai</p>
 </div>
 
-<div class="grid">
-
+<!-- SOCIAL -->
 <div class="card">
-    <div class="section-title">💰 Income Overview</div>
-    <canvas id="incomeChart"></canvas>
+<div class="title">📱 Social Media</div>
+
+<div class="item">📸 Instagram — @armanqureshi2800  
+<a href="https://instagram.com/armanqureshi2800" target="_blank">🔗 Open</a></div>
+
+<div class="item">💬 WhatsApp — 9026550240  
+<a href="https://wa.me/9026550240" target="_blank">🔗 Open</a></div>
+
+<div class="item">🔵 Facebook  
+<a href="#" target="_blank">🔗 Open</a></div>
+
+<div class="item">▶️ YouTube  
+<a href="#" target="_blank">🔗 Open</a></div>
+
+<div class="item">𝕏 Twitter  
+<a href="#" target="_blank">🔗 Open</a></div>
+
 </div>
 
+<!-- GOOGLE APPS -->
 <div class="card">
-    <div class="section-title">📊 Finance</div>
-    <p id="finance"></p>
+<div class="title">☁️ Google & Apps</div>
+
+<div class="item">📧 Gmail  
+<a href="#" target="_blank">🔗 Open</a></div>
+
+<div class="item">🗂️ Drive  
+<a href="https://drive.google.com" target="_blank">🔗 Open</a></div>
+
+<div class="item">📍 Maps  
+<a href="https://maps.google.com" target="_blank">🔗 Open</a></div>
+
 </div>
 
+<!-- FINANCE -->
 <div class="card">
-    <div class="section-title">📱 Devices</div>
-    <p id="devices"></p>
+<div class="title">📈 Trading & Finance</div>
+
+<p>
+📊 Client ID: 902655<br>
+💰 Monthly Income: ₹18,000<br>
+💵 Side Income: ₹5,000<br>
+📈 Trading Income: ₹20,000<br>
+🏆 Annual Income: ₹3,96,000 (approx)
+</p>
+
 </div>
 
+<!-- DEVICES -->
 <div class="card">
-    <div class="section-title">🏠 Assets</div>
-    <p id="assets"></p>
+<div class="title">📱 Devices</div>
+
+<p>
+📱 Samsung Z Fold 5 (1TB)<br>
+📱 iPhone 7 / 11 / 13<br>
+📱 Infinix Hot 12<br>
+💻 Laptop: Asus ExpertBook P1
+</p>
+
 </div>
 
+<!-- PROPERTY -->
 <div class="card">
-    <div class="section-title">☁️ Apps</div>
-    <p id="apps"></p>
-</div>
+<div class="title">🏠 Property</div>
+
+<p>
+🏠 Property: Nothing<br>
+🚗 Vehicle: Not Added<br>
+🌾 Land: Not Added
+</p>
 
 </div>
 
 </div>
-
-<script>
-
-// 🔥 EDIT YOUR DATA HERE
-const data = {
-    name: "Arman Qureshi",
-    bio: "Ads Agency | Trader",
-
-    income: {
-        monthly: 50000,
-        trading: 20000,
-        side: 10000
-    },
-
-    finance: "UPI + Trading Account",
-    devices: "iPhone XR, iPhone 11, Laptop",
-    assets: "House, Bike | Net Worth ₹5L+",
-    apps: ["Drive","Gmail","Maps","Amazon","Spotify"]
-};
-
-// BASIC INFO
-name.innerText = data.name;
-bio.innerText = data.bio;
-
-// OTHER DATA
-finance.innerText = data.finance;
-devices.innerText = data.devices;
-assets.innerText = data.assets;
-apps.innerText = data.apps.join(", ");
-
-// 📊 CHART
-new Chart(document.getElementById("incomeChart"), {
-    type: "doughnut",
-    data: {
-        labels: ["Monthly","Trading","Side"],
-        datasets: [{
-            data: [
-                data.income.monthly,
-                data.income.trading,
-                data.income.side
-            ]
-        }]
-    }
-});
-
-</script>
 
 </body>
 </html>
