@@ -1,168 +1,233 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Arman Stocks</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AQ Credits</title>
 
 <style>
-body{margin:0;font-family:Arial;background:#0f172a;color:#fff;text-align:center;}
-.container{padding:20px;}
-.card{background:#1e293b;margin:10px;padding:15px;border-radius:12px;}
-button{padding:10px;margin:5px;border:none;border-radius:8px;background:#38bdf8;color:#000;font-weight:bold;}
-input{padding:10px;border-radius:8px;border:none;margin:5px;}
-.hidden{display:none;}
+:root{
+  --bg1:#020617; --bg2:#0f172a; --card:#0b1220cc; --line:#1f2a44;
+  --accent:#22c55e; --accent2:#4ade80; --text:#e5e7eb; --muted:#94a3b8;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--text);
+  font-family:system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2));
+}
+.container{max-width:420px;margin:auto;padding:18px}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.badge{font-size:12px;color:#000;background:linear-gradient(45deg,#ffd700,#ffb700);
+  padding:4px 8px;border-radius:999px}
+.card{
+  background:var(--card); border:1px solid var(--line);
+  backdrop-filter:blur(12px);
+  border-radius:16px; padding:14px; margin:10px 0;
+  box-shadow:0 10px 30px rgba(0,0,0,.25);
+}
+.row{display:flex;justify-content:space-between;align-items:center}
+.title{font-weight:700}
+.muted{color:var(--muted); font-size:13px}
+.value{font-size:22px;font-weight:800}
+
+.btn{
+  width:100%; border:none; border-radius:12px; padding:12px; margin-top:8px;
+  font-weight:800; cursor:pointer; color:#001;
+  background:linear-gradient(45deg,var(--accent),var(--accent2));
+}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn.warn{background:linear-gradient(45deg,#f59e0b,#fbbf24)}
+.btn:active{transform:scale(.98)}
+
+.hidden{display:none}
+
+.input{
+  width:100%; border:1px solid var(--line); border-radius:12px; padding:12px;
+  background:#060c18; color:var(--text); margin:8px 0;
+}
+
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{font-size:13px;padding:8px;border-bottom:1px solid var(--line)}
+.table th{color:var(--muted);text-align:left}
+
+.footer{margin-top:12px;text-align:center;color:var(--muted);font-size:12px}
+.pill{padding:6px 10px;border-radius:999px;background:#071023;border:1px solid var(--line)}
+.flex{display:flex;gap:8px}
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<div id="login" class="container">
-<h2>Login</h2>
-<input id="user" placeholder="Enter Email">
-<button onclick="login()">Enter</button>
-</div>
+  <!-- LOGIN -->
+  <div id="loginBox" class="card">
+    <div class="header">
+      <div class="title">AQ Credits</div>
+      <div class="badge">BETA</div>
+    </div>
+    <div class="muted">Login to view your portfolio</div>
+    <input id="email" class="input" placeholder="Enter Email"/>
+    <button class="btn" onclick="login()">Continue</button>
+  </div>
 
-<div id="dash" class="hidden">
+  <!-- DASHBOARD -->
+  <div id="dash" class="hidden">
 
-<h2>Your Portfolio</h2>
+    <div class="header">
+      <div class="title">Portfolio</div>
+      <div class="flex">
+        <span class="pill">Virtual Credits</span>
+      </div>
+    </div>
 
-<div class="card">AQ Growth: <span id="g"></span></div>
-<div class="card">AQ Premium: <span id="p"></span></div>
-<div class="card">AQ Elite: <span id="e"></span></div>
+    <!-- BALANCES -->
+    <div class="card">
+      <div class="row">
+        <div>
+          <div class="title">AQ Growth</div>
+          <div class="muted">Basic credits</div>
+        </div>
+        <div class="value" id="g">0</div>
+      </div>
+    </div>
 
-<h3>Buy Stocks</h3>
+    <div class="card">
+      <div class="row">
+        <div>
+          <div class="title">AQ Premium</div>
+          <div class="muted">Mid-tier credits</div>
+        </div>
+        <div class="value" id="p">0</div>
+      </div>
+    </div>
 
-<div class="card">
-AQ Growth  
-<br>
-<button onclick="buy('growth',100)">Buy 100 (₹100)</button>
-<button onclick="buy('growth',500)">Buy 500 (₹500)</button>
-</div>
+    <div class="card">
+      <div class="row">
+        <div>
+          <div class="title">AQ Elite</div>
+          <div class="muted">High-tier credits</div>
+        </div>
+        <div class="value" id="e">0</div>
+      </div>
+    </div>
 
-<div class="card">
-AQ Premium  
-<br>
-<button onclick="buy('premium',200)">Buy 200 (₹200)</button>
-<button onclick="buy('premium',1000)">Buy 1000 (₹800)</button>
-</div>
+    <!-- BUY -->
+    <div class="card">
+      <div class="title">Buy Credits</div>
+      <div class="muted">Tap → Pay on WhatsApp → then confirm</div>
 
-<div class="card">
-AQ Elite  
-<br>
-<button onclick="buy('elite',300)">Buy 300 (₹300)</button>
-<button onclick="buy('elite',1500)">Buy 1500 (₹1000)</button>
-</div>
+      <button class="btn" onclick="startBuy('g',100,100)">Buy 100 Growth (₹100)</button>
+      <button class="btn" onclick="startBuy('p',200,200)">Buy 200 Premium (₹200)</button>
+      <button class="btn" onclick="startBuy('e',300,300)">Buy 300 Elite (₹300)</button>
 
-<h3>Confirm Payment</h3>
-<button onclick="confirm()">✔️ I Paid</button>
+      <button class="btn warn" onclick="confirmPaid()">✔ I Paid (Confirm)</button>
+    </div>
 
-<h3>Purchase History</h3>
-<div id="history"></div>
+    <!-- HISTORY -->
+    <div class="card">
+      <div class="title">Transactions</div>
+      <table class="table">
+        <thead><tr><th>Details</th><th>Time</th></tr></thead>
+        <tbody id="history"></tbody>
+      </table>
+    </div>
 
-<button onclick="logout()">Logout</button>
+    <button class="btn ghost" onclick="logout()">Logout</button>
+
+    <div class="footer">This is a virtual credits demo. Not real stock.</div>
+  </div>
 
 </div>
 
 <script>
-
 let currentBuy=null;
 
 // LOGIN
 function login(){
- let user=document.getElementById("user").value;
- if(!user)return alert("Enter email");
+  const email = (document.getElementById('email').value||'').trim();
+  if(!email) return alert('Enter email');
 
- if(!localStorage.getItem(user)){
-   localStorage.setItem(user,JSON.stringify({
-     g:100,p:200,e:300
-   }));
- }
+  if(!localStorage.getItem(email)){
+    localStorage.setItem(email, JSON.stringify({g:100,p:200,e:300}));
+  }
+  localStorage.setItem('u', email);
 
- localStorage.setItem("u",user);
-
- document.getElementById("login").classList.add("hidden");
- document.getElementById("dash").classList.remove("hidden");
-
- load();
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('dash').classList.remove('hidden');
+  load();
 }
 
-// LOAD DATA
+// LOAD
 function load(){
- let u=localStorage.getItem("u");
- let d=JSON.parse(localStorage.getItem(u));
-
- document.getElementById("g").innerText=d.g;
- document.getElementById("p").innerText=d.p;
- document.getElementById("e").innerText=d.e;
-
- loadHistory();
+  const u = localStorage.getItem('u');
+  const d = JSON.parse(localStorage.getItem(u) || '{"g":0,"p":0,"e":0}');
+  g.textContent = d.g; p.textContent = d.p; e.textContent = d.e;
+  loadHistory();
 }
 
-// BUY CLICK
-function buy(type,qty){
- currentBuy={type,qty};
-
- window.open("https://wa.me/919026550240");
-
- alert("Send payment on WhatsApp\nThen click 'I Paid'");
+// START BUY → open WhatsApp
+function startBuy(type, qty, price){
+  currentBuy = {type, qty, price};
+  const msg = encodeURIComponent(
+    `Hi, I want to buy ${qty} ${type.toUpperCase()} credits (₹${price}).`
+  );
+  window.open(`https://wa.me/919026550240?text=${msg}`);
+  alert('Send payment on WhatsApp, then tap "I Paid (Confirm)".');
 }
 
-// CONFIRM PURCHASE
-function confirm(){
- if(!currentBuy)return alert("Select buy first");
+// CONFIRM (manual)
+function confirmPaid(){
+  if(!currentBuy) return alert('Select a package first');
 
- let u=localStorage.getItem("u");
- let d=JSON.parse(localStorage.getItem(u));
+  const u = localStorage.getItem('u');
+  const d = JSON.parse(localStorage.getItem(u));
 
- if(currentBuy.type=="growth") d.g+=currentBuy.qty;
- if(currentBuy.type=="premium") d.p+=currentBuy.qty;
- if(currentBuy.type=="elite") d.e+=currentBuy.qty;
+  if(currentBuy.type==='g') d.g += currentBuy.qty;
+  if(currentBuy.type==='p') d.p += currentBuy.qty;
+  if(currentBuy.type==='e') d.e += currentBuy.qty;
 
- localStorage.setItem(u,JSON.stringify(d));
+  localStorage.setItem(u, JSON.stringify(d));
 
- saveHistory("Bought "+currentBuy.qty+" "+currentBuy.type.toUpperCase());
+  const detail = `+${currentBuy.qty} ${currentBuy.type.toUpperCase()} (₹${currentBuy.price})`;
+  saveHistory(detail);
 
- alert("Purchase Successful ✅");
-
- currentBuy=null;
- load();
+  alert('Success ✅ Credits added');
+  currentBuy = null;
+  load();
 }
 
 // HISTORY
 function saveHistory(text){
- let u=localStorage.getItem("u");
- let h=JSON.parse(localStorage.getItem(u+"_h"))||[];
- h.push(text+" | "+new Date().toLocaleString());
- localStorage.setItem(u+"_h",JSON.stringify(h));
+  const u = localStorage.getItem('u');
+  const h = JSON.parse(localStorage.getItem(u+'_h')||'[]');
+  h.push({t:text, d:new Date().toLocaleString()});
+  localStorage.setItem(u+'_h', JSON.stringify(h));
 }
-
 function loadHistory(){
- let u=localStorage.getItem("u");
- let h=JSON.parse(localStorage.getItem(u+"_h"))||[];
-
- let box=document.getElementById("history");
- box.innerHTML="";
-
- h.forEach(i=>{
-   box.innerHTML+="<div class='card'>"+i+"</div>";
- });
+  const u = localStorage.getItem('u');
+  const h = JSON.parse(localStorage.getItem(u+'_h')||'[]');
+  const box = document.getElementById('history');
+  box.innerHTML = '';
+  h.slice().reverse().forEach(i=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${i.t}</td><td>${i.d}</td>`;
+    box.appendChild(tr);
+  });
 }
 
 // LOGOUT
 function logout(){
- localStorage.removeItem("u");
- location.reload();
+  localStorage.removeItem('u');
+  location.reload();
 }
 
 // AUTO LOGIN
-if(localStorage.getItem("u")){
- document.getElementById("login").classList.add("hidden");
- document.getElementById("dash").classList.remove("hidden");
- load();
+if(localStorage.getItem('u')){
+  document.getElementById('loginBox').classList.add('hidden');
+  document.getElementById('dash').classList.remove('hidden');
+  load();
 }
-
 </script>
-
 </body>
 </html>
